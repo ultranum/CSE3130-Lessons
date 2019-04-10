@@ -4,7 +4,7 @@ author: garrett
 date created: 2019-04-08
 '''
 
-import pygame
+import pygame, random
 pygame.init() # loads pygame module commands in the program
 
 # Display Variables
@@ -35,6 +35,8 @@ class text:
         self.size = 28
         self.x = pos[0]
         self.y = pos[1]
+        self.xDir = 1
+        self.yDir = 1
         self.pos = (self.x, self.y)
         self.fontFam = 'Arial'
         self.font = pygame.font.SysFont(self.fontFam, self.size)
@@ -66,19 +68,31 @@ class text:
         self.font = pygame.font.SysFont(self.fontFam, self.size)
         self.surface = self.font.render(self.text, 1, self.color)
 
-    def moveText(self):
-        self.x += 15
+    def setText(self, text):
+        self.text = str(text)
+        self.surface = self.font.render(self.text, 1, self.color)
+
+    def moveText(self, spdx=1, spdy=1):
+
+        self.x += (self.xDir*spdx)
+        self.y += (self.yDir * spdy)
         self.pos = (self.x, self.y)
-        screen.blit(self.getText(), self.getPOS())
-        
+        if self.x > WIDTH - self.surface.get_width():
+            self.xDir = -1
+        elif self.x < 0:
+            self.xDir = 1
+        if self.y > HEIGHT - self.surface.get_height():
+            self.yDir = -1
+        elif self.y < 0:
+            self.yDir = 1
 
 # --- CODE STARTS HERE --- #
-
+x = 0
 myText = text('Hello', (100,100))
 myText.setColor(YELLOW)
 myText.setSize(100)
-myText.setPOS(20,10)
-myText.setFont('Times New Roman')
+myText.setPOS(WIDTH/2 - myText.getText().get_width()/2, HEIGHT/2 - myText.getText().get_height()/2)
+myText.setFont('Comic Sans')
 
 newText = text('world')
 newText1 = text('a',(30,20))
@@ -89,7 +103,13 @@ while running:
     for event in pygame.event.get(): # returns all inputs and triggers into an array
         if event.type == pygame.QUIT: # If the red X was clicked.
             running = False
-    myText.moveText()
+    newText.moveText(12,20)
+    newText.setText(x)
+    x += 1
+    newText1.moveText(2,9)
+    newText2.moveText(9,10)
+    newText3.moveText(30,10)
+    screen.fill(GREY)
     screen.blit(myText.getText(), myText.getPOS())
     screen.blit(newText.getText(), newText.getPOS())
     screen.blit(newText1.getText(), newText1.getPOS())
