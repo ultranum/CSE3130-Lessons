@@ -86,6 +86,25 @@ class text:
         elif self.y < 0:
             self.yDir = 1
 
+    def playerMove(self, pressedKey, spd = 5):
+        if pressedKey[pygame.K_w]:
+            self.y -= spd
+        if pressedKey[pygame.K_s]:
+            self.y += spd
+        if pressedKey[pygame.K_a]:
+            self.x -= spd
+        if pressedKey[pygame.K_d]:
+            self.x += spd
+
+        if self.x > WIDTH - self.surface.get_width():
+            self.x = WIDTH - self.surface.get_width()
+        if self.x < 0:
+            self.x = 0
+        if self.y > HEIGHT - self.surface.get_height():
+            self.y = HEIGHT - self.surface.get_height()
+        if self.y < 0:
+            self.y = 0
+        self.pos = (self.x, self.y)
 # --- CODE STARTS HERE --- #
 x = 0
 myText = text('Hello', (100,100))
@@ -103,12 +122,17 @@ while running:
     for event in pygame.event.get(): # returns all inputs and triggers into an array
         if event.type == pygame.QUIT: # If the red X was clicked.
             running = False
+        pressedKeys = pygame.key.get_pressed()
+        print(pressedKeys[pygame.K_a])
+    myText.playerMove(pressedKeys)
     newText.moveText(12,20)
-    newText.setText(x)
-    x += 1
-    newText1.moveText(2,9)
-    newText2.moveText(9,10)
-    newText3.moveText(30,10)
+    newText.playerMove(pressedKeys)
+
+    # newText.setText(x)
+    # x += 1
+    # newText1.moveText(2,9)
+    # newText2.moveText(9,10)
+    # newText3.moveText(30,10)
     screen.fill(GREY)
     screen.blit(myText.getText(), myText.getPOS())
     screen.blit(newText.getText(), newText.getPOS())
