@@ -58,7 +58,7 @@ class box:
         self.color = color
         self.surface.fill(self.color)
 
-    def moveBox(self, spdx = 0, spdy = 0):
+    def autoMove(self, spdx = 0, spdy = 0):
         self.x += self.xDir*spdx
         self.y += self.yDir*spdy
         self.pos = (self.x, self.y)
@@ -70,6 +70,36 @@ class box:
             self.yDir = -1
         elif self.y < 0:
             self.yDir = 1
+
+    def playerMove(self, pressedKey, spd=5):
+        if pressedKey[pygame.K_w]:
+            self.y -= spd
+        if pressedKey[pygame.K_s]:
+            self.y += spd
+        if pressedKey[pygame.K_a]:
+            self.x -= spd
+        if pressedKey[pygame.K_d]:
+            self.x += spd
+
+        if self.x > WIDTH - self.surface.get_width():
+            self.x = WIDTH - self.surface.get_width()
+        if self.x < 0:
+            self.x = 0
+        if self.y > HEIGHT - self.surface.get_height():
+            self.y = HEIGHT - self.surface.get_height()
+        if self.y < 0:
+            self.y = 0
+        self.pos = (self.x, self.y)
+
+    def collision(self, box1, box2):
+        topEdge1 = box1
+        botEdge1 = box1
+        rightEdge1 = box1
+        leftEdge1 = box1
+        topEdge2 = box2
+        botEdge2 = box2
+        rightEdge2 =
+        leftEdge2 =
 # Create the Window
 
 screen = pygame.display.set_mode(SCREENDIM) # Creates the main surface where all other assets are placed on top
@@ -89,9 +119,10 @@ while running:
     for event in pygame.event.get(): # returns all inputs and triggers into an array
         if event.type == pygame.QUIT: # If the red X was clicked.
             running = False
-    whitebox.moveBox(10, 10)
+        pressedKeys = pygame.key.get_pressed()
+    whitebox.autoMove(10, 10)
     screen.fill(GREY)
-    screen.blit(whitebox.surface, whitebox.pos)
+    screen.blit(whitebox.getBox(), whitebox.getPos())
     clock.tick(FPS) # pause the game until the FPS time is reached
     pygame.display.flip() # update the screen with changes.
 pygame.quit()
