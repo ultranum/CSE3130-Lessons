@@ -91,15 +91,26 @@ class box:
             self.y = 0
         self.pos = (self.x, self.y)
 
-    def collision(self, box1, box2):
-        topEdge1 = box1
-        botEdge1 = box1
-        rightEdge1 = box1
-        leftEdge1 = box1
-        topEdge2 = box2
-        botEdge2 = box2
-        rightEdge2 =
-        leftEdge2 =
+def collision(box1, box2):
+    topEdge1 = box1.surface.get_width()
+    botEdge1 = box1.surface.get_height() + box1.surface.get_width()
+    rightEdge1 = box1.surface.
+    leftEdge1 = box1.x
+    topEdge2 = box2.y + box2.height
+    botEdge2 = box2.y
+    rightEdge2 = box2.x + box2.width
+    leftEdge2 = box2.x
+    if (topEdge1 < botEdge2 or botEdge1 > topEdge2 or leftEdge1 < rightEdge2 or rightEdge1 > leftEdge2):
+        if (topEdge1 < botEdge2):
+            box1.y = botEdge2 - box1.height - 10
+        if (botEdge1 > topEdge2):
+            box1.y = topEdge2 - 10
+        if (leftEdge1 < rightEdge2):
+            box1.x = rightEdge2 - 10
+        if (rightEdge1 > leftEdge2):
+            box1.x = leftEdge2 - box1.width - 10
+    else:
+        return False
 # Create the Window
 
 screen = pygame.display.set_mode(SCREENDIM) # Creates the main surface where all other assets are placed on top
@@ -110,9 +121,14 @@ clock = pygame.time.Clock() # Starts a clock to measure time
 
 # --- CODE STARTS HERE --- #
 
-whitebox = box(50,100)
+whitebox = box(50,100, WHITE, 500, 500)
 whitebox.setDim(50,50)
 whitebox.setPos(WIDTH/2 - whitebox.getBox().get_width(), HEIGHT/2 - whitebox.getBox().get_width())
+blackbox = box(10, 10, BLACK)
+
+
+
+
 
 running = True
 while running:
@@ -120,8 +136,11 @@ while running:
         if event.type == pygame.QUIT: # If the red X was clicked.
             running = False
         pressedKeys = pygame.key.get_pressed()
-    whitebox.autoMove(10, 10)
+    whitebox.playerMove(pressedKeys)
+    collision(whitebox, blackbox)
+
     screen.fill(GREY)
+    screen.blit(blackbox.getBox(), blackbox.getPos())
     screen.blit(whitebox.getBox(), whitebox.getPos())
     clock.tick(FPS) # pause the game until the FPS time is reached
     pygame.display.flip() # update the screen with changes.
