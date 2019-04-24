@@ -91,26 +91,6 @@ class box:
             self.y = 0
         self.pos = (self.x, self.y)
 
-def collision(box1, box2):
-    topEdge1 = box1.surface.get_width()
-    botEdge1 = box1.surface.get_height() + box1.surface.get_width()
-    rightEdge1 = box1.surface.
-    leftEdge1 = box1.x
-    topEdge2 = box2.y + box2.height
-    botEdge2 = box2.y
-    rightEdge2 = box2.x + box2.width
-    leftEdge2 = box2.x
-    if (topEdge1 < botEdge2 or botEdge1 > topEdge2 or leftEdge1 < rightEdge2 or rightEdge1 > leftEdge2):
-        if (topEdge1 < botEdge2):
-            box1.y = botEdge2 - box1.height - 10
-        if (botEdge1 > topEdge2):
-            box1.y = topEdge2 - 10
-        if (leftEdge1 < rightEdge2):
-            box1.x = rightEdge2 - 10
-        if (rightEdge1 > leftEdge2):
-            box1.x = leftEdge2 - box1.width - 10
-    else:
-        return False
 # Create the Window
 
 screen = pygame.display.set_mode(SCREENDIM) # Creates the main surface where all other assets are placed on top
