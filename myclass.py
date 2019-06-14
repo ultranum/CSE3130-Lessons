@@ -132,16 +132,16 @@ class box(myClass):
             self.x -= spd
         if pressedKey[pygame.K_d]:
             self.x += spd
-        #
-        # if self.x > WIDTH - self.surface.get_width():
-        #     self.x = WIDTH - self.surface.get_width()
-        # if self.x < 0:
-        #     self.x = 0
-        # if self.y > HEIGHT - self.surface.get_height():
-        #     self.y = HEIGHT - self.surface.get_height()
-        # if self.y < 0:
-        #     self.y = 0
-        # self.pos = (self.x, self.y)
+
+        if self.x > WIDTH - self.surface.get_width():
+            self.x = WIDTH - self.surface.get_width()
+        if self.x < 0:
+            self.x = 0
+        if self.y > HEIGHT - self.surface.get_height():
+            self.y = HEIGHT - self.surface.get_height()
+        if self.y < 0:
+            self.y = 0
+        self.pos = (self.x, self.y)
 class mySprite(myClass):
     def __init__(self, fileName):
         myClass.__init__(self)

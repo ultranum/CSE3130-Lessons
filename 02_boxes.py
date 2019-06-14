@@ -103,8 +103,8 @@ clock = pygame.time.Clock() # Starts a clock to measure time
 
 whitebox = box(50,100, WHITE, 500, 500)
 whitebox.setDim(50,50)
-whitebox.setPos(WIDTH/2 - whitebox.getBox().get_width(), HEIGHT/2 - whitebox.getBox().get_width())
-blackbox = box(10, 10, BLACK)
+# whitebox.setPos(WIDTH/2 - whitebox.getBox().get_width(), HEIGHT/2 - whitebox.getBox().get_width())
+blackbox = box(20, 20, BLACK)
 
 
 
@@ -117,7 +117,7 @@ while running:
             running = False
         pressedKeys = pygame.key.get_pressed()
     whitebox.playerMove(pressedKeys)
-    collision(whitebox, blackbox)
+
 
     screen.fill(GREY)
     screen.blit(blackbox.getBox(), blackbox.getPos())

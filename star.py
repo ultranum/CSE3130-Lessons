@@ -9,7 +9,7 @@ pygame.init() # loads pygame module commands in the program
 
 # Display Variables
 TITLE = 'star' # Appears in the window title
-FPS = 30 # fps
+FPS = 60 # fps
 WIDTH = 800
 HEIGHT = 600
 SCREENDIM = (WIDTH, HEIGHT)
@@ -40,15 +40,30 @@ while running:
             running = False
         pressedKeys = pygame.key.get_pressed()
     screen.fill(BLACK)
+    # for i in range(len(stars)):
+    #     if stars[i].width == 1:
+    #         stars[i].autoMove(-2,0)
+    #     elif stars[i].width == 2:
+    #         stars[i].autoMove(-4,0)
+    #     elif stars[i].width == 3:
+    #         stars[i].autoMove(-6,0)
+    #     else:
+    #         stars[i].autoMove(-3,0)
+    #     stars[i].playerMove(pressedKeys)
+    #     if stars[i].x < 0:
+    #         stars[i].x = WIDTH
+    #         stars[i].y = random.randrange(0, HEIGHT)
+    #     elif stars[i].x > WIDTH:
+    #         stars[i].x = 0
+    #         stars[i].y = random.randrange(0, HEIGHT)
+    #     if stars[i].y > HEIGHT:
+    #         stars[i].y = 0
+    #         stars[i].x = random.randrange(0, WIDTH)
+    #     elif stars[i].y < 0:
+    #         stars[i].y = HEIGHT
+    #         stars[i].x = random.randrange(0, WIDTH)
     for i in range(len(stars)):
-        if stars[i].width == 1:
-            stars[i].autoMove(-2,0)
-        elif stars[i].width == 2:
-            stars[i].autoMove(-4,0)
-        elif stars[i].width == 3:
-            stars[i].autoMove(-6,0)
-        else:
-            stars[i].autoMove(-3,0)
+        stars[i].autoMove(0, 0.8)
         stars[i].playerMove(pressedKeys)
         if stars[i].x < 0:
             stars[i].x = WIDTH
@@ -62,7 +77,6 @@ while running:
         elif stars[i].y < 0:
             stars[i].y = HEIGHT
             stars[i].x = random.randrange(0, WIDTH)
-
         screen.blit(stars[i].getSurface(), stars[i].getPOS())
 
 
